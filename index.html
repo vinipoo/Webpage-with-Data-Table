@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/fontawesome.min.css" integrity="sha384-BY+fdrpOd3gfeRvTSMT+VUZmA728cfF9Z2G42xpaRkUGu2i3DyzpTURDo5A6CaLK" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            position: relative;
+            padding: 20px;
+        }
+
+        #data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        #data-table th,
+        #data-table td {
+            border: 1px solid #ddd;
+            /* padding: 8px; */
+            padding-top: 24px;
+            text-align: center;
+           
+           
+        }
+
+        #data-table th {
+            background-color: #f2f2f2;
+        }
+
+        #data-table tr:hover {
+            /* background-color: #000; */
+        }
+
+        .edit-button {
+            cursor: pointer;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+           
+            
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            /* width:600px; */
+            display: block;
+            box-sizing: border-box;
+            justify-content: center ;
+            display: flex ;
+          
+          
+        }
+
+        .close {
+            color: #3b3939;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* New style for rounded-circle image in the modal */
+        #uploaded-image.modal-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .error-message {
+            display: none;
+            color: red;
+            margin-top: 10px;
+        }
+
+      
+        tbody img {
+            width: 65px;
+            height: auto;
+            display: block;
+        }
+
+        .editIcon{
+            text-align: right;
+           margin-left: 12px;
+           margin-top: -3px;
+          padding: 0.5px;
+        }
+
+        button.btn ,btn-danger btn-rounded{
+            border-radius: 100px;
+            border: 1px solid;
+            padding-right: 27px;
+                padding-left: 27px;
+                margin-top: 10px;
+            
+        }
+
+        .bi bi-pencil{
+
+            color:black;
+            background-color: palevioletred;
+        }
+
+        #insideModal{
+width: 500px;
+background-color: rgb(255, 255, 255);
+display: block;
+            /* box-sizing: border-box; */
+            justify-content: center ;
+            /* display: flex ; */
+            padding: 19px;
+    border-radius: 16px;
+
+    box-shadow: 0 1.6px 3.6px 0 rgba(0,0,0,.132), 0 0.3px 0.9px 0 rgba(0,0,0,.108);
+    font-size: 16px;
+    line-height: 22px;
+    border-radius: 2px;
+    
+
+        }
+
+
+      .widthOf{
+
+        width:100%;
+        margin-top: 22px;
+
+        }
+
+       .breakablewidthOf{
+background-color: aqua;
+        width:99%;
+        padding-top: 13px;
+        padding: 10px;
+        border-radius: 8px;
+        color: #fff;
+    background-color: #0078d4;
+    -webkit-box-shadow: 0 2px 5px 0 rgba(0,0,0,.2), 0 2px 10px 0 rgba(0,0,0,.1);
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.2), 0 2px 10px 0 rgba(0,0,0,.1);
+       }
+
+       .breakable{
+          margin-top:15px;       
+
+       }
+
+       .form-check-input {
+    position: absolute;
+    margin-top: 0.8rem;
+    margin-left: -1.68rem;
+}
+
+.form-label{
+
+    margin-top: 30px;
+}
+
+.eta{
+margi
+    background-color: #e2e2e257;
+}
+      
+    </style>
+
+    <title>Webpage with Data Table</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Webpage with Data Table</h1>
+        <img class="img-fluid" src="bg_img.jpg" alt="Background Picture">
+
+        <table  id="data-table" class="table table-hover">
+            <thead> 
+                <tr>
+                    <th>Edit</th>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Country</th>
+                    <th>ETA</th>
+                    <th>Breakable</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr id="hoverow" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
+                    <td class="edit-button" onclick="openModal(1)">
+                        <button type="button" class="btn btn-danger btn-rounded" data-mdb-ripple-init>Edit<i class="bi bi-pencil"></i><svg class="editIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                          </svg></button></td>
+                    <td><img class="rounded-circle" src="https://media.istockphoto.com/id/1393750072/vector/flat-white-icon-man-for-web-design-silhouette-flat-illustration-vector-illustration-stock.jpg?s=612x612&w=0&k=20&c=s9hO4SpyvrDIfELozPpiB_WtzQV9KhoMUP9R9gVohoU=" alt="Image 1"></td>
+                 
+                    <td>John Doe</td>
+                    <td>USA</td>
+                    <td>Fast</td>
+                    <td>No</td>
+                </tr>
+                <tr data-toggle="tooltip" data-placement="top" title="Tooltip on top">
+                    <td class="edit-button" onclick="openModal(2)"><button type="button" class="btn btn-danger btn-rounded" data-mdb-ripple-init>Edit<i class="bi bi-pencil"></i><svg class="editIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                      </svg></button></td>
+                    <td><img class="rounded-circle" src="https://media.istockphoto.com/id/1393750072/vector/flat-white-icon-man-for-web-design-silhouette-flat-illustration-vector-illustration-stock.jpg?s=612x612&w=0&k=20&c=s9hO4SpyvrDIfELozPpiB_WtzQV9KhoMUP9R9gVohoU=" alt="Image 2"></td>
+                    <td>Jane Doe</td>
+                    <td>Canada</td>
+                    <td>Slow</td>
+                    <td>Yes</td>
+                </tr>
+                <tr data-toggle="tooltip" data-placement="top" title="Tooltip on top">
+                    <td class="edit-button" onclick="openModal(3)"><button type="button" class="btn btn-danger btn-rounded" data-mdb-ripple-init>Edit<i class="bi bi-pencil"></i><svg class="editIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                      </svg></button></td>
+                    <td><img  class="rounded-circle" src="https://media.istockphoto.com/id/1393750072/vector/flat-white-icon-man-for-web-design-silhouette-flat-illustration-vector-illustration-stock.jpg?s=612x612&w=0&k=20&c=s9hO4SpyvrDIfELozPpiB_WtzQV9KhoMUP9R9gVohoU=" alt="Image 3"></td>
+                    <td>Bob Smith</td>
+                    <td>UK</td>
+                    <td>Very Fast</td>
+                    <td>No</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+   
+    <div id="edit-modal" class="modal">
+         <!-- Modal -->
+         <div id="insideModal" class="position-absolute top-50 start-50 translate-middle">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <!-- Modal content goes here -->
+            <h2>Edit Item</h2>
+          
+            <img  id="uploaded-image" class="modal-image" alt="Uploaded Image">
+            <div class="error-message" id="error-message">Error: Same image already selected in another row!</div>
+            <label class="form-label" class="widthOf" for="upload-image">Upload Image:</label>
+            <input class="form-control"  type="file" id="upload-image" accept="image/*" onchange="previewImage()">
+           
+            
+            <label class="form-label"  for="name">Name:</label>
+            <input class="form-control" type="text" id="name">
+           
+            <label class="widthOf" for="country">Country:</label>
+            <select  class="form-control" id="country" class="form-select">
+                <option value="USA">USA</option>
+                <option value="Canada">Canada</option>
+                <option value="UK">UK</option>
+            </select>
+          
+          <div class="eta">
+            <label class="widthOf">ETA:</label>
+          
+            <div class="form-check form-check-inline">
+            <div>
+                <label  class="form-check">
+                    <input type="radio" name="eta" value="Slow" class="form-check-input"> Slow
+                </label>
+            </div>
+            <div>
+                <label class="form-check">
+                    <input type="radio" name="eta" value="Fast" class="form-check-input"> Fast
+                </label>
+            </div>
+            <div>
+                <label class="form-check">
+                    <input type="radio" name="eta" value="Very Fast" class="form-check-input"> Very Fast
+                </label>
+            </div>
+            </div>
+            </div>
+           
+            <div class="breakable">
+               
+            <label class="breakablewidthOf" for="breakable" class="form-check-label"><?xml version="1.0" ?><svg fill="none" height="24" stroke-width="1.5" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M11.5 7L9 12H12H15L12.5 17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 18L3.13036 4.91253C3.05646 4.39524 3.39389 3.91247 3.90398 3.79912L11.5661 2.09641C11.8519 2.03291 12.1481 2.03291 12.4339 2.09641L20.096 3.79912C20.6061 3.91247 20.9435 4.39524 20.8696 4.91252L19 18C18.9293 18.495 18.5 21.5 12 21.5C5.5 21.5 5.07071 18.495 5 18Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>&nbsp;&nbsp;Breakable:</label>
+            <input type="checkbox" id="breakable" class="form-check-input">
+            </div>
+<div class="widthOf">
+            <button onclick="saveEdit()" class="btn btn-primary">Save</button>
+            <button onclick="closeModal()" class="btn btn-secondary">Cancel</button>
+      
+        </div>
+        </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let selectedRowIndex;
+        let selectedImage;
+        let errorMessage = document.getElementById('error-message');
+
+        function openModal(rowId) {
+            selectedRowIndex = rowId;
+            const modal = document.getElementById('edit-modal');
+            // Logic to populate modal with data from the clicked row
+            modal.style.display = 'block';
+
+            // Retrieve data from the selected row and populate the modal fields
+            const selectedRow = document.getElementById('data-table').rows[selectedRowIndex];
+            const uploadedImage = document.getElementById('uploaded-image');
+            const nameInput = document.getElementById('name');
+            const countryInput = document.getElementById('country');
+            const etaInputs = document.getElementsByName('eta');
+            const breakableInput = document.getElementById('breakable');
+
+            uploadedImage.src = selectedRow.cells[1].querySelector('img').src;
+            nameInput.value = selectedRow.cells[2].innerText;
+            countryInput.value = selectedRow.cells[3].innerText;
+
+            // Set the selected radio button for ETA
+            for (const etaInput of etaInputs) {
+                if (etaInput.value === selectedRow.cells[4].innerText) {
+                    etaInput.checked = true;
+                }
+            }
+
+            breakableInput.checked = selectedRow.cells[5].innerText === 'Yes';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('edit-modal');
+            modal.style.display = 'none';
+            resetErrorMessage();
+        }
+
+        function saveEdit() {
+            const modal = document.getElementById('edit-modal');
+            const selectedRow = document.getElementById('data-table').rows[selectedRowIndex];
+
+            // Update image in the data table
+            const uploadedImage = document.getElementById('uploaded-image');
+            resizeImage(uploadedImage, 100, 100)
+                .then((resizedImage) => {
+                    selectedRow.cells[1].innerHTML = `<img class="rounded-circle" src="${resizedImage.src}" alt="Image">`;
+
+                    // Update other fields in the data table
+                    selectedRow.cells[2].innerText = document.getElementById('name').value;
+                    selectedRow.cells[3].innerText = document.getElementById('country').value;
+
+                    // Update ETA based on the selected radio button
+                    const etaInputs = document.getElementsByName('eta');
+                    for (const etaInput of etaInputs) {
+                        if (etaInput.checked) {
+                            selectedRow.cells[4].innerText = etaInput.value;
+                        }
+                    }
+
+                    // Update Breakable column based on checkbox state
+                    selectedRow.cells[5].innerText = document.getElementById('breakable').checked ? 'Yes' : 'No';
+
+                    modal.style.display = 'none';
+                })
+                .catch((error) => {
+                    alert(error.message);
+                });
+        }
+
+        function previewImage() {
+            const uploadedImage = document.getElementById('uploaded-image');
+            const imageInput = document.getElementById('upload-image');
+            if (imageInput.files.length > 0) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    uploadedImage.src = e.target.result;
+                };
+                reader.readAsDataURL(imageInput.files[0]);
+            }
+        }
+
+        function resizeImage(image, maxWidth, maxHeight) {
+            return new Promise((resolve, reject) => {
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+
+                let width = image.width;
+                let height = image.height;
+
+                // Ensure the image is loaded before drawing it
+                image.onload = function () {
+                    if (width > height) {
+                        if (width > maxWidth) {
+                            height *= maxWidth / width;
+                            width = maxWidth;
+                        }
+                    } else {
+                        if (height > maxHeight) {
+                            width *= maxHeight / height;
+                            height = maxHeight;
+                        }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+
+                    try {
+                        // Draw the image on the canvas with rounded corners
+                        context.beginPath();
+                        context.arc(width / 2, height / 2, Math.min(width, height) / 2, 0, 2 * Math.PI);
+                        context.clip();
+                        context.drawImage(image, 0, 0, width, height);
+
+                        const resizedImage = new Image();
+                        resizedImage.src = canvas.toDataURL('image/png');
+
+                        resolve(resizedImage);
+                    } catch (error) {
+                        reject(new Error('Error drawing image on canvas.'));
+                    }
+                };
+
+                // Handle image loading error
+                image.onerror = function () {
+                    reject(new Error('Error loading image.'));
+                };
+
+                image.src = image.src; // Trigger the image load
+            });
+        }
+
+        function resetErrorMessage() {
+            errorMessage.style.display = 'none';
+        }
+    </script>
+    <script>
+        $(document).ready(function(){
+          $('[data-toggle="tooltip"]').tooltip();   
+        });
+    </script>
+</body>
+</html>
